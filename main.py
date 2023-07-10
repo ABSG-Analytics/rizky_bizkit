@@ -1,40 +1,39 @@
 logo = """
-╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                &@                                                                                                         ║
-║                               #@.                                                                                                         ║
-║                              @&@@          ██████╗ ██╗███████╗██╗  ██╗██╗   ██╗    ██████╗ ██╗███████╗██╗  ██╗██╗████████╗                ║
-║                             @(/%@@         ██╔══██╗██║██╔════╝██║ ██╔╝╚██╗ ██╔╝    ██╔══██╗██║╚══███╔╝██║ ██╔╝██║╚══██╔══╝                ║
-║                            @@*& @&         ██████╔╝██║███████╗█████╔╝  ╚████╔╝     ██████╔╝██║  ███╔╝ █████╔╝ ██║   ██║                   ║
-║                           @&&* %@@         ██╔══██╗██║╚════██║██╔═██╗   ╚██╔╝      ██╔══██╗██║ ███╔╝  ██╔═██╗ ██║   ██║                   ║
-║                         @@%((,/,@          ██║  ██║██║███████║██║  ██╗   ██║       ██████╔╝██║███████╗██║  ██╗██║   ██║                   ║
-║                       ,&@*@&*/@@           ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝       ╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝                   ║
-║                     *&@&,/ *@@@                                                                                                           ║
-║                   (@@&@&&&*.@@/                                                     & @,                                                  ║
-║                %(@@%&&%%%@@&%#@%#     .(*,/*%@@@#,                                @@&@/%&@&%@&&&@                                         ║
-║            *&@@%&@@@((#%@@*//@@&%%%%(@&&&@@&&&@&&&@%&@@&&&&@#%@@##*              @&@@@ %&(/%,  @@@&@@@@@@@@%.                             ║
-║ &@%&%      *&&*@%@@@@@**#@%&(%(@%&@@@%&&,(&@,(,,.,...,.,.,,#,..*..,,*@          %&%@&**./%&&&&&&@@@#@@&@@@#&#@%#&@@@%%@&&@&#%#(&&&@@&@&%@ ║
-║ @#@,@#/&#//&%#(%%@*#%&&.,@&%@&/&&&@@@@/%&@@&@@@@@%@@@@@@@@@@@#&&@/#%           #&@(,& /(&&& #&&&/(%@&&%%@&& &#@& &@@%#% *& &%  *(*%@@@@&& ║
-║ &@@@#&@@@@&&##(&(/*,#% @@@&@&%%(@@%%&((,(,,**#@&&&%#@&%*@@&&&%@@&(#&@@##      %&&(//&*(#&@  ./&.   ( # @ *%@@%*@/&#%/*@#&%@&#&@@@@@@%%%@@ ║
-║ ,@@#*&&&&#/&&&&&%&@&&&/@@@%%#(#@&%   ...(,,..&%,%,.,%,**@*#(&#%%&.           &#%//.&&/,.*% .@,(%,% # % # . ./  .,* %   (%*@@(,/##%##/##%& ║
-║ ((@@@&@@@@@@@@@@&&%&&@@%.#,,& / (&  ,.@,@@@@@&@@#                           @%&/ , &/,*@(,./ ,##,((( . (** %,    , (.   %(.#.*((%%/&@#@@@ ║
-║ &@&&&@@%&@#%/**@*.@,*,,,,**(%( ....    @*&@%@&@&                            #&(*.&@# */@## /@@*,&&* . #(##@/*.@. /*&(/((##@(,/,.//((#%&@/ ║
-║ *@@@&@(**,,....&,.*.. .*... ,.,........,#(#%                                 &( &&@,&*&.% @/(@%%##@&%%@(*  #(&&&&@%#@@@&%@@%@/ .../(@@&(. ║
-║ @#%%@@@%%&%@@@&#%%@%&@@@&(,.,,,,**.( .,&@&@                                      &//.%&,& ,&%%&@(@&&@@@@%&&&&&@&@(                   .    ║
-║  /*  /@@@#             *&@(#@.*%(#&&%(.%                                            %%@&&&% &&@@&                                         ║
-║                                                                                        @(                                                 ║
-║                                                                                                                                           ║
-╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                                              ║
+║                       #@.                                                                                    ║
+║                      @&@@                                                                                    ║
+║                     @(/%@@   ██████╗ ██╗███████╗██╗  ██╗██╗   ██╗    ██████╗ ██╗███████╗██╗  ██╗██╗████████╗ ║
+║                    @@*& @&   ██╔══██╗██║██╔════╝██║ ██╔╝╚██╗ ██╔╝    ██╔══██╗██║╚══███╔╝██║ ██╔╝██║╚══██╔══╝ ║
+║                   @&&* %@@   ██████╔╝██║███████╗█████╔╝  ╚████╔╝     ██████╔╝██║  ███╔╝ █████╔╝ ██║   ██║    ║
+║                 @@%((,/,@    ██╔══██╗██║╚════██║██╔═██╗   ╚██╔╝      ██╔══██╗██║ ███╔╝  ██╔═██╗ ██║   ██║    ║
+║               ,&@*@&*/@@     ██║  ██║██║███████║██║  ██╗   ██║       ██████╔╝██║███████╗██║  ██╗██║   ██║    ║
+║             *&@&,/ *@@@      ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝       ╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ║
+║           (@@&@&&&*.@@/                                                                                      ║
+║        %(@@%&&%%%@@&%#@%#  ,/*%@@@#,                               @@&@/%&@&%@&&&@                           ║
+║    *&@@%&@@@((#%@@*//@@&%%%@@&&&@&&&@%&@@&&&&@#%@@##*             @&@@@ %&(/%,  @@@&@@@@@@@@%.               ║
+║ %  *&&*@%@@@@@**#@%&(%(@%&@(&@,(,,.,...,.,.,,#,..*..,,*@         %&%@&**./%&&&&&&@@@#@@&@@@#&#@%#&@@@%%@&&@& ║
+║ @#/&%#(%%@*#%&&.,@&%@&/&&&@@@&@@@@@%@@@@@@@@@@@#&&@/#%          #&@(,& /(&&& #&&&/(%@&&%%@&& &#@& &@@%#% *&% ║
+║ #&&&##(&(/*,#% @@@&@&%%(@@%,,**#@&&&%#@&%*@@&&&%@@&(#&@@##     %&&(//&*(#&@  ./&.   ( # @ *%@@%*@/&#%/*@#&%@ ║
+║ *&/&&&&&%&@&&&/@@@%%#(#@&% ,,..&%,%,.,%,**@*#(&#%%&.          &#%//.&&/,.*% .@,(%,% # % # . ./  .,* %   (%*@ ║
+║ @&@@@@@@&&%&&@@%.#,,& / (& @@@@&@@#                          @%&/ , &/,*@(,./ ,##,((( . (** %,    , (.   %(. ║
+║ &@#%/**@*.@,*,,,,**(%( ....&@%@&@&                           #&(*.&@# */@## /@@*,&&* . #(##@/*.@. /*&(/((##@ ║
+║ &@,....&,.*.. .*... ,.,....(#%                                &( &&@,&*&.% @/(@%%##@&%%@(*  #(&&&&@%#@@@&%@@ ║
+║ @@%@@@&#%%@%&@@@&(,.,,,,**.&@                                     &//.%&,& ,&%%&@(@&&@@@@%&&&&&@&@(          ║
+║  /             *&@(#@.*%(#&                                          %%@&&&% &&@@&                           ║
+║                                                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 """
 
-import math
 import requests
 import io
 from bs4 import BeautifulSoup
 import xarray as xr
 import pandas as pd
+import numpy as np
 
 
-def get_nwm_forcast():
+def get_nwm_forcast() -> pd.DataFrame:
     base_url = "https://nomads.ncep.noaa.gov/pub/data/nccf/com/nwm/prod/"
     r = requests.get(base_url)
 
@@ -72,8 +71,17 @@ def get_nwm_forcast():
     return df
 
 
-def get_nwm_anomaly():
-    base_url = "https://nomads.ncep.noaa.gov/pub/data/nccf/com/nwm/post-processed/WMS/short_range/channel_rt/"
+def get_nwm_amomaly(prediction_length="short") -> pd.DataFrame:
+    # set the url based on requested prediction length
+    base_url = "https://nomads.ncep.noaa.gov/pub/data/nccf/com/nwm/post-processed/WMS/"
+    if prediction_length == "short":
+        base_url += "short_range/channel_rt/"
+    elif prediction_length == "medium":
+        base_url += "medium_range/channel_rt/"
+    elif prediction_length == "long":
+        base_url += "long_range/channel_rt/"
+    else:
+        raise Exception("not a vailed predicion length")
 
     # get the page with all the anomaly forcasts listed
     r = requests.get(base_url)
@@ -83,38 +91,30 @@ def get_nwm_anomaly():
     # in the contiguous US
     a_tags = soup.find_all("a")
     a_tags = list(map(lambda x: x.text, a_tags))
-    a_tags = list(filter(lambda x: "conus" in x, a_tags))
+    a_tags = list(filter(lambda x: "channel_rt.conus.nc" in x, a_tags))
     data_url = base_url + a_tags[-1]
     r = requests.get(data_url)
 
-    # zip feature id and anomaly level then sort by feature id
-    anomaly_dict = xr.load_dataset(io.BytesIO(r.content), engine="h5netcdf").to_dict()
-    ids_and_anomalies = list(
-        zip(
-            anomaly_dict["coords"]["feature_id"]["data"],
-            anomaly_dict["data_vars"]["streamflow_anomaly"]["data"],
-        )
+    dataset = xr.load_dataset(io.BytesIO(r.content), engine="h5netcdf")
+
+    max_anomaly = np.array(dataset.variables["streamflow_anomaly"]).max(
+        axis=1, initial=0
     )
-    ids_and_anomalies.sort(key=lambda x: x[0])
-
-    # get the max anomaly for each of these levels
-    max_anomalies = []
-    for _, anomalies in ids_and_anomalies:
-        max_anomaly = max(anomalies)
-        if math.isnan(max_anomaly):
-            max_anomaly = 0.0
-        max_anomalies.append(max_anomaly)
-
-    # combine the anomalies with the lat lon df
+    feature_id = np.array(dataset.variables["feature_id"])
+    anomaly_df = pd.DataFrame(
+        max_anomaly, columns=["streamflow_anomaly"], index=feature_id
+    )
     lat_lon_df = pd.read_csv("lat_lons.csv", index_col=0)
-    lat_lon_df = lat_lon_df.sort_index()
-    lat_lon_df["anomaly"] = max_anomalies
 
-    return lat_lon_df
+    df = pd.merge(
+        lat_lon_df, anomaly_df, left_on="feature_id", right_index=True, how="inner"
+    )
+    df = df.fillna(0)
+
+    return df
 
 
 if __name__ == "__main__":
     print(logo)
-    df = get_nwm_anomaly()
-
+    df = get_nwm_amomaly(prediction_length="long")
     print(df)
