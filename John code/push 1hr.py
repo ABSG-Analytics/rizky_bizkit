@@ -29,7 +29,7 @@ def push_1hr_pred():
     r = requests.get(data_url)
 
     dataset = xr.load_dataset(io.BytesIO(r.content), engine="h5netcdf")
-    flow_1hr = np.array(dataset.variables["streamflow_anomaly"])[:,0]
+    flow_1hr = np.array(dataset.variables["streamflow"])[:,0]
     lat_lon_df = pd.read_csv("C:\\Users\\JWisniewski\\Downloads\\risky_bizkit-main\\risky_bizkit-main\\lat_lons.csv")
     if str(dataset['time'][0].data) not in lat_lon_df.columns: 
         lat_lon_df[str(dataset['time'][0].data)] = flow_1hr
