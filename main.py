@@ -1,39 +1,20 @@
-logo = """
-╔══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                                          ║
-║                     #@.                                                                                  ║
-║                    @&@@                                                                                  ║
-║                   @(/%@@  ██████╗ ██╗███████╗██╗  ██╗██╗   ██╗   ██████╗ ██╗███████╗██╗  ██╗██╗████████╗ ║
-║                  @@*& @&  ██╔══██╗██║╚══███╔╝██║ ██╔╝╚██╗ ██╔╝   ██╔══██╗██║╚══███╔╝██║ ██╔╝██║╚══██╔══╝ ║
-║                 @&&* %@@  ██████╔╝██║  ███╔╝ █████╔╝  ╚████╔╝    ██████╔╝██║  ███╔╝ █████╔╝ ██║   ██║    ║
-║               @@%((,/,@   ██╔══██╗██║ ███╔╝  ██╔═██╗   ╚██╔╝     ██╔══██╗██║ ███╔╝  ██╔═██╗ ██║   ██║    ║
-║             ,&@*@&*/@@    ██║  ██║██║███████╗██║  ██╗   ██║█████╗██████╔╝██║███████╗██║  ██╗██║   ██║    ║
-║           *&@&,/ *@@@     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝╚════╝╚═════╝ ╚═╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ║
-║         (@@&@&&&*.@@/                                                                                    ║
-║      %(@@%&&%%%@@&%#@%#  ,/*%@@@#,                               @@&@/%&@&%@&&&@                         ║
-║  *&@@%&@@@((#%@@*//@@&%%%@@&&&@&&&@%&@@&&&&@#%@@##*             @&@@@ %&(/%,  @@@&@@@@@@@@%.             ║
-║% *&&*@%@@@@@**#@%&(%(@%&@(&@,(,,.,...,.,.,,#,..*..,,*@         %&%@&**./%&&&&&&@@@#@@&@@@#&#@%#&@@@%%@&&@║
-║@/&%#(%%@*#%&&.,@&%@&/&&&@@@&@@@@@%@@@@@@@@@@@#&&@/#%          #&@(,& /(&&& #&&&/(%@&&%%@&& &#@& &@@%#% *&║
-║#&&##(&(/*,#% @@@&@&%%(@@%,,**#@&&&%#@&%*@@&&&%@@&(#&@@##     %&&(//&*(#&@  ./&.   ( # @ *%@@%*@/&#%/*@#&%║
-║*/&&&&&%&@&&&/@@@%%#(#@&% ,,..&%,%,.,%,**@*#(&#%%&.          &#%//.&&/,.*% .@,(%,% # % # . ./  .,* %   (%*║
-║@@@@@@@&&%&&@@%.#,,& / (& @@@@&@@#                          @%&/ , &/,*@(,./ ,##,((( . (** %,    , (.   %(║
-║&#%/**@*.@,*,,,,**(%( ....&@%@&@&                           #&(*.&@# */@## /@@*,&&* . #(##@/*.@. /*&(/((##║
-║&,....&,.*.. .*... ,.,....(#%                                &( &&@,&*&.% @/(@%%##@&%%@(*  #(&&&&@%#@@@&%@║
-║@%@@@&#%%@%&@@@&(,.,,,,**.&@                                     &//.%&,& ,&%%&@(@&&@@@@%&&&&&@&@(        ║
-║              *&@(#@.*%(#&                                          %%@&&&% &&@@&                         ║
-║                                                                                                          ║
-╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
-"""
-
 import requests
 import io
 from bs4 import BeautifulSoup
 import xarray as xr
 import pandas as pd
 import numpy as np
+import json
+import os
+from logo import LOGO
+
+DATA_DIR = "data"
+VELO_AVG_PATH = os.path.join(DATA_DIR, "velocities_avg.npy")
+STRM_AVG_PATH = os.path.join(DATA_DIR, "strm_flows_avg.npy")
+DATA_PTS_PATH = os.path.join(DATA_DIR, "data.json")
 
 
-def get_nwm_forcast() -> pd.DataFrame:
+def one_hour_forcast():
     base_url = "https://nomads.ncep.noaa.gov/pub/data/nccf/com/nwm/prod/"
     r = requests.get(base_url)
 
@@ -48,27 +29,63 @@ def get_nwm_forcast() -> pd.DataFrame:
     a_tags = list(filter(lambda x: "channel" in x and "f001" in x, a_tags))
 
     data_url = short_range_url + a_tags[-1]
-
     r = requests.get(data_url)
-    df = xr.load_dataset(io.BytesIO(r.content), engine="h5netcdf").to_dataframe()
-    df = df.reset_index(level=[0, 1])
-    df = df.drop(
-        [
-            "crs",
-            "nudge",
-            "qSfcLatRunoff",
-            "qBucket",
-            "qBtmVertRunoff",
-            "time",
-            "reference_time",
-        ],
-        axis=1,
-    )
+    dataset = xr.load_dataset(io.BytesIO(r.content), engine="h5netcdf")
+    velocities = np.array(dataset.variables["velocity"])
+    strm_flows = np.array(dataset.variables["streamflow"])
 
-    route_link_df = pd.read_csv("lat_lons.csv", index_col=0)
-    df = pd.merge(df, route_link_df, left_index=True, right_index=True)
+    if velocities.shape != (2776738,):
+        raise Exception(f"velocities shape is {velocities.shape}, not (2776738,)")
+    if strm_flows.shape != (2776738,):
+        raise Exception(f"strm_flows shape is {strm_flows.shape}, not (2776738,)")
 
-    return df
+    return velocities, strm_flows
+
+
+def reavg_data(velo_arr: np.ndarray, strm_arr: np.ndarray):
+    with open(DATA_PTS_PATH, "r+") as f:
+        data = json.load(f)
+
+        num_data_pts = data["num_data_pts"] + 1
+        new_weight = 1.0 / num_data_pts
+        old_weight = 1.0 - new_weight
+        data["num_data_pts"] = num_data_pts
+
+        f.seek(0)
+        f.truncate()
+        json.dump(data, f)
+
+    with open(VELO_AVG_PATH, "r+b") as f:
+        velo_avg = np.load(f)
+
+        velo_arr[np.isnan(velo_arr)] = velo_avg[np.isnan(velo_arr)]
+        velo_avg[np.isnan(velo_avg)] = velo_arr[np.isnan(velo_avg)]
+
+        new_velocities_avg = np.average(
+            np.vstack((velo_avg, velo_arr)),
+            axis=0,
+            weights=[old_weight, new_weight],
+        )
+
+        f.seek(0)
+        f.truncate()
+        np.save(f, new_velocities_avg, allow_pickle=True, fix_imports=False)
+
+    with open(STRM_AVG_PATH, "r+b") as f:
+        strm_avg = np.load(f)
+
+        strm_arr[np.isnan(strm_arr)] = strm_avg[np.isnan(strm_arr)]
+        strm_avg[np.isnan(strm_avg)] = strm_arr[np.isnan(strm_avg)]
+
+        new_strm_flows_avg = np.average(
+            np.vstack((strm_avg, strm_arr)),
+            axis=0,
+            weights=[old_weight, new_weight],
+        )
+
+        f.seek(0)
+        f.truncate()
+        np.save(f, new_strm_flows_avg, allow_pickle=True, fix_imports=False)
 
 
 def get_nwm_amomaly(prediction_length="short") -> pd.DataFrame:
@@ -115,6 +132,11 @@ def get_nwm_amomaly(prediction_length="short") -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    print(logo)
-    df = get_nwm_amomaly(prediction_length="long")
-    print(df)
+    print(LOGO)
+
+    velo_arr, strm_arr = one_hour_forcast()
+    # with open(VELO_AVG_PATH, "wb") as f:
+    #     np.save(f, velo_arr, allow_pickle=True, fix_imports=False)
+    # with open(STRM_AVG_PATH, "wb") as f:
+    #     np.save(f, strm_arr, allow_pickle=True, fix_imports=False)
+    reavg_data(velo_arr, strm_arr)
